@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qcon — Qatar Engineering &amp; Construction Company W.L.L</title>
+<meta name="description" content="Qcon is Qatar's leading national EPC & Maintenance contractor for the Oil & Gas, Petrochemical, Fertilizer and Power industries. Established 1975.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  /* logo-matched palette: Qcon deep blue + orange */
+  --blue:#16407C;
+  --blue-deep:#0D2B57;
+  --blue-bright:#1F5AAB;
+  --orange:#F26A21;
+  --orange-soft:#F58A4E;
+  --ink:#0C1320;
+  --steel:#18222F;
+  --steel-2:#222F3F;
+  --line:#2B384A;
+  --paper:#F4F6F9;
+  --paper-2:#E9EDF3;
+  --mist:#AFBBCA;
+  --grey:#8B95A1;
+  --grey-light:#B9C3CF;
+  --font-display:'Barlow Condensed',sans-serif;
+  --font-body:'Archivo',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+::selection{background:var(--blue);color:#fff}
+
+/* ---------- utility ---------- */
+.wrap{max-width:1280px;margin:0 auto;padding:0 32px}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--orange)}
+.eyebrow.on-dark{color:var(--orange)}
+.eyebrow.on-dark::before{background:var(--orange)}
+h1,h2,h3,h4{font-family:var(--font-display);text-transform:uppercase;line-height:1.02;letter-spacing:.005em}
+.section-title{font-size:clamp(38px,5.2vw,68px);font-weight:800;margin:18px 0 0}
+
+/* scroll reveals */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+.t-mask{overflow:hidden;display:block}
+.t-mask>span{display:block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.in .t-mask>span,.t-rev.in>.t-mask>span{transform:none}
+.t-rev .t-mask:nth-child(2)>span{transition-delay:.12s}
+.t-rev .t-mask:nth-child(3)>span{transition-delay:.24s}
+.pop{opacity:0;transform:translateY(46px) scale(.96);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.pop.in{opacity:1;transform:none}
+
+/* scroll progress */
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:300;pointer-events:none}
+.progress .fill{height:100%;width:100%;background:linear-gradient(90deg,var(--blue),var(--orange));transform-origin:left;transform:scaleX(0)}
+
+/* ---------- top utility bar ---------- */
+.topbar{background:var(--ink);color:var(--grey-light);font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:38px}
+.topbar a:hover{color:#fff}
+.topbar .dot{color:var(--orange);margin:0 8px}
+@media(max-width:760px){.topbar .hours{display:none}.topbar{font-size:10.5px}}
+
+/* ---------- nav ---------- */
+header.nav{position:sticky;top:0;z-index:100;background:rgba(244,246,249,.92);backdrop-filter:blur(12px);border-bottom:1px solid #D8DEE7;transition:box-shadow .3s}
+header.nav.scrolled{box-shadow:0 6px 24px rgba(12,19,32,.08)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:80px}
+.logo{display:flex;align-items:center}
+.logo img{height:52px;width:auto}
+nav.menu{display:flex;gap:32px;align-items:center}
+nav.menu a{font-family:var(--font-display);font-weight:600;font-size:17px;text-transform:uppercase;letter-spacing:.06em;color:#36414F;position:relative;padding:6px 0}
+nav.menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--orange);transition:width .25s}
+nav.menu a:hover{color:var(--blue)}
+nav.menu a:hover::after{width:100%}
+.nav-cta{background:var(--blue);color:#fff!important;padding:11px 22px!important;transition:background .25s}
+.nav-cta::after{display:none}
+.nav-cta:hover{background:var(--blue-deep)}
+.burger{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px;flex-direction:column;justify-content:center;gap:6px;align-items:center}
+.burger span{width:24px;height:2px;background:var(--ink);transition:.3s}
+@media(max-width:1020px){
+  nav.menu{position:fixed;inset:0;background:var(--paper);flex-direction:column;justify-content:flex-start;padding-top:160px;gap:26px;transform:translateX(100%);transition:transform .35s;z-index:98}
+  nav.menu.open{transform:none}
+  nav.menu a{font-size:26px}
+  .burger{display:flex}
+  .logo img{height:44px}
+}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(rgba(242,106,33,.04) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(242,106,33,.04) 1px,transparent 1px);
+  background-size:56px 56px;pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center;min-height:calc(100vh - 118px);padding:72px 0 110px;position:relative}
+.hero h1{font-size:clamp(52px,7.4vw,112px);font-weight:800;color:#fff}
+.hero h1 .accent{color:var(--orange)}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.55)}
+.hero-kicker{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.2em;color:var(--orange);text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero-kicker::before{content:"";width:42px;height:2px;background:var(--orange)}
+.hero p.lede{margin-top:28px;max-width:520px;font-size:18px;color:var(--grey-light);line-height:1.7}
+.hero-actions{margin-top:42px;display:flex;gap:18px;flex-wrap:wrap}
+.btn{font-family:var(--font-display);font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.07em;padding:16px 32px;display:inline-flex;align-items:center;justify-content:center;gap:12px;transition:.25s;cursor:pointer;border:0}
+.btn-primary{background:var(--orange);color:#fff}
+.btn-primary:hover{background:var(--orange-soft);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn .arrow{transition:transform .25s}
+.btn:hover .arrow{transform:translateX(4px)}
+
+/* hero photo composition */
+.hero-visual{position:relative;height:560px}
+.hv-img{position:absolute;overflow:hidden;background:var(--steel);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.hv-img img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.08);transition:transform 6s ease}
+.hv-img.loaded img{transform:scale(1)}
+.hv-main{inset:0 60px 110px 0;z-index:2;clip-path:polygon(0 0,100% 0,100% 86%,86% 100%,0 100%)}
+.hv-main::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(22,64,124,.32),transparent 55%)}
+.hv-side{right:0;bottom:46px;width:46%;height:46%;z-index:3;border:6px solid var(--ink)}
+.hv-side::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,19,32,.35),transparent 60%)}
+.hv-accent{position:absolute;left:-26px;top:42px;width:84px;height:84px;border:2px solid var(--orange);z-index:1}
+.hv-accent::after{content:"";position:absolute;inset:14px;background:var(--blue)}
+.hv-badge{position:absolute;left:26px;bottom:140px;z-index:4;background:var(--blue);color:#fff;padding:18px 22px;display:flex;align-items:baseline;gap:10px;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.hv-badge .n{font-family:var(--font-display);font-weight:800;font-size:44px;line-height:1}
+.hv-badge .t{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);max-width:110px;line-height:1.5}
+.titleblock{position:absolute;left:0;right:60px;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(242,106,33,.35);background:rgba(12,19,32,.85);backdrop-filter:blur(6px);z-index:4}
+.tb-cell{padding:12px 14px;border-right:1px solid rgba(242,106,33,.22)}
+.tb-cell:last-child{border-right:0}
+.tb-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:var(--grey);text-transform:uppercase;display:block}
+.tb-value{font-family:var(--font-mono);font-size:13px;color:var(--orange);letter-spacing:.05em}
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;min-height:0;padding:56px 0 96px}
+  .hero-visual{height:480px;max-width:640px}
+}
+@media(max-width:560px){
+  .hero-grid{padding:44px 0 90px;gap:44px}
+  .hero p.lede{font-size:16px}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-visual{height:400px}
+  .hv-main{inset:0 30px 96px 0}
+  .hv-side{bottom:60px;border-width:4px}
+  .hv-badge{left:14px;bottom:120px;padding:14px 16px}
+  .hv-badge .n{font-size:34px}
+  .titleblock{grid-template-columns:repeat(2,1fr);right:30px}
+  .tb-cell:nth-child(2n){border-right:0}
+  .tb-cell:nth-child(-n+2){border-bottom:1px solid rgba(242,106,33,.22)}
+}
+
+/* scroll cue */
+.scroll-cue{position:absolute;bottom:28px;left:32px;display:flex;align-items:center;gap:12px;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:var(--grey);text-transform:uppercase}
+.scroll-cue .bar{width:1px;height:42px;background:linear-gradient(var(--orange),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{opacity:.4}50%{opacity:1}}
+@media(max-width:560px){.scroll-cue{display:none}}
+
+/* ---------- velocity ticker strips ---------- */
+.ticker{background:var(--blue);color:#fff;overflow:hidden;padding:22px 0;position:relative}
+.ticker.alt{background:var(--paper-2);color:var(--ink);border-top:1px solid #D8DEE7;border-bottom:1px solid #D8DEE7}
+.ticker-row{display:flex;white-space:nowrap;will-change:transform}
+.ticker-row span{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,3.6vw,52px);text-transform:uppercase;letter-spacing:.04em;padding:0 24px;display:inline-flex;align-items:center;gap:24px}
+.ticker-row span::after{content:"◆";font-size:.4em;color:var(--orange)}
+.ticker.alt .ticker-row span{color:transparent;-webkit-text-stroke:1.3px var(--blue)}
+.ticker.alt .ticker-row span::after{color:var(--orange)}
+@media(max-width:560px){.ticker{padding:14px 0}}
+
+/* ---------- stats plate ---------- */
+.stats{background:var(--blue-deep);color:#fff;position:relative;overflow:hidden}
+.stats::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 18px,rgba(255,255,255,.025) 18px 19px)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:1}
+.stat{padding:58px 32px;border-right:1px solid rgba(255,255,255,.14)}
+.stat:last-child{border-right:0}
+.stat .num{font-family:var(--font-display);font-weight:800;font-size:clamp(46px,4.6vw,68px);line-height:1;display:flex;align-items:baseline}
+.stat .num .suffix{font-size:.55em;color:var(--orange);margin-left:4px}
+.stat .lbl{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-top:12px}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid rgba(255,255,255,.14);padding:42px 28px}.stat:nth-child(2n){border-right:0}}
+@media(max-width:520px){.stats-grid{grid-template-columns:1fr}.stat{border-right:0;padding:36px 28px}}
+
+/* ---------- about ---------- */
+.about{padding:130px 0;position:relative;overflow:hidden}
+.ghost{position:absolute;font-family:var(--font-display);font-weight:800;text-transform:uppercase;color:rgba(22,64,124,.05);font-size:clamp(90px,16vw,240px);line-height:1;white-space:nowrap;pointer-events:none;will-change:transform;user-select:none}
+.about .ghost{top:30px;left:-40px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;position:relative;z-index:1}
+.about p{margin-top:24px;font-size:17px;color:#414B59;max-width:560px}
+.about p strong{color:var(--ink)}
+.cap-list{margin-top:48px;display:grid;gap:0;border-top:1px solid #D5DBE4}
+.cap{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:20px 0;border-bottom:1px solid #D5DBE4;align-items:center;transition:padding-left .3s}
+.cap:hover{padding-left:10px}
+.cap .tag{font-family:var(--font-mono);font-size:11px;color:var(--blue);letter-spacing:.1em;background:rgba(22,64,124,.08);padding:6px 0;text-align:center}
+.cap .txt{font-size:15.5px;color:#36414F}
+.cap .txt b{color:var(--ink);font-weight:600}
+.about-photo{position:relative}
+.about-photo .frame{aspect-ratio:4/4.6;position:relative;overflow:hidden;background:var(--steel)}
+.about-photo .frame img{width:100%;height:118%;object-fit:cover;will-change:transform}
+.about-photo .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(20deg,rgba(12,19,32,.45),transparent 50%)}
+.about-photo .stamp{position:absolute;bottom:-22px;left:-22px;background:var(--blue);color:#fff;padding:26px 30px;max-width:280px;z-index:2}
+.about-photo .stamp .yr{font-family:var(--font-display);font-weight:800;font-size:52px;line-height:1;color:#fff}
+.about-photo .stamp .yr span{color:var(--orange)}
+.about-photo .stamp .yr-lbl{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:8px}
+@media(max-width:980px){.about{padding:96px 0}.about-grid{grid-template-columns:1fr;gap:56px}.about-photo .stamp{left:auto;right:-8px}}
+@media(max-width:560px){.about{padding:80px 0}.about-photo .frame{aspect-ratio:4/4}.about-photo .stamp{padding:18px 22px}.about-photo .stamp .yr{font-size:40px}}
+
+/* ---------- divisions ---------- */
+.divisions{background:var(--ink);color:#fff;padding:130px 0 140px;position:relative;overflow:hidden}
+.divisions::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:56px 56px}
+.divisions .ghost{color:rgba(255,255,255,.03);top:40px;right:-60px;left:auto}
+.div-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;position:relative;z-index:1}
+.div-head p{max-width:420px;color:var(--grey-light);font-size:16px}
+.div-grid{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);position:relative;z-index:1}
+.div-card{background:var(--steel);padding:40px 32px 36px;position:relative;overflow:hidden;transition:background .3s;min-height:330px;display:flex;flex-direction:column}
+.div-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.22,.61,.36,1)}
+.div-card:hover{background:var(--steel-2)}
+.div-card:hover::before{transform:scaleX(1)}
+.div-id{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--orange)}
+.div-icon{margin:22px 0 20px;height:52px;display:flex;align-items:center}
+.div-icon svg{height:52px;width:auto;stroke:var(--mist);transition:stroke .3s,transform .3s}
+.div-card:hover .div-icon svg{stroke:var(--orange);transform:translateY(-4px)}
+.div-card h3{font-size:27px;font-weight:700;letter-spacing:.02em}
+.div-card p{margin-top:14px;font-size:14.5px;color:var(--grey-light);line-height:1.65;flex:1}
+.div-link{margin-top:22px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);display:inline-flex;align-items:center;gap:10px;transition:color .25s;background:none;border:0;cursor:pointer;padding:6px 0;align-self:flex-start}
+.div-link::after{content:"→";transition:transform .25s}
+.div-card:hover .div-link{color:var(--orange)}
+.div-card:hover .div-link::after{transform:translateX(5px)}
+@media(max-width:980px){.divisions{padding:96px 0}.div-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.divisions{padding:80px 0}.div-grid{grid-template-columns:1fr;margin-top:48px}.div-card{min-height:0;padding:32px 26px}}
+
+/* ---------- service detail modal ---------- */
+.modal{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:24px}
+.modal.open{display:flex}
+.modal-backdrop{position:absolute;inset:0;background:rgba(12,19,32,.78);backdrop-filter:blur(6px);animation:fadeIn .3s ease}
+.modal-panel{position:relative;background:var(--steel);color:#fff;max-width:760px;width:100%;max-height:88vh;overflow-y:auto;border:1px solid var(--line);box-shadow:0 40px 120px rgba(0,0,0,.6);animation:panelIn .4s cubic-bezier(.22,.61,.36,1)}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes panelIn{from{opacity:0;transform:translateY(40px) scale(.97)}}
+.modal-head{padding:36px 40px 0;position:relative}
+.modal-head::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,var(--blue),var(--orange))}
+.modal-id{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--orange);text-transform:uppercase}
+.modal-title{font-size:clamp(30px,4vw,44px);font-weight:800;margin-top:10px}
+.modal-intro{margin:18px 0 0;color:var(--grey-light);font-size:15.5px;line-height:1.7}
+.modal-body{padding:28px 40px 40px}
+.scope-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin:26px 0 14px;display:flex;align-items:center;gap:12px}
+.scope-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.scope-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px}
+.scope-list li{font-size:14px;color:var(--grey-light);padding-left:20px;position:relative;line-height:1.55}
+.scope-list li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;background:var(--orange);transform:rotate(45deg)}
+.modal-clients{margin-top:8px;font-size:13.5px;color:var(--mist);font-family:var(--font-mono);line-height:1.9}
+.modal-cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.btn-blue{background:var(--blue);color:#fff}
+.btn-blue:hover{background:var(--blue-bright);transform:translateY(-2px)}
+.modal-close{position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,.06);border:1px solid var(--line);cursor:pointer;display:grid;place-items:center;transition:background .25s,border-color .25s;z-index:2}
+.modal-close:hover{background:var(--orange);border-color:var(--orange)}
+.modal-close svg{width:18px;height:18px;stroke:#fff}
+body.modal-open{overflow:hidden}
+@media(max-width:640px){
+  .modal{padding:0;align-items:flex-end}
+  .modal-panel{max-height:92vh}
+  .modal-head{padding:30px 24px 0}
+  .modal-body{padding:22px 24px 34px}
+  .scope-list{grid-template-columns:1fr}
+  .modal-cta .btn{width:100%}
+}
+
+/* ---------- timeline ---------- */
+.legacy{padding:130px 0;background:var(--paper-2);position:relative;overflow:hidden}
+.legacy .ghost{color:rgba(12,19,32,.04);bottom:10px;top:auto;left:-30px}
+.timeline{margin-top:80px;position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.tl-track{position:absolute;top:7px;left:0;right:0;height:2px;background:#CBD4E0}
+.tl-track .tl-fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--orange))}
+.tl-item{position:relative;padding-top:36px}
+.tl-item::before{content:"";position:absolute;top:0;left:0;width:16px;height:16px;background:var(--paper-2);border:3px solid var(--blue);transform:rotate(45deg);transition:background .4s,border-color .4s}
+.tl-item.lit::before{background:var(--orange);border-color:var(--orange)}
+.tl-year{font-family:var(--font-display);font-weight:800;font-size:40px;color:var(--blue);line-height:1}
+.tl-item h4{font-size:19px;margin-top:10px;font-weight:700;text-transform:none;font-family:var(--font-body);letter-spacing:0}
+.tl-item p{font-size:14px;color:#525C68;margin-top:8px}
+@media(max-width:900px){.legacy{padding:96px 0}.timeline{grid-template-columns:1fr 1fr;margin-top:56px}.tl-track{display:none}}
+@media(max-width:540px){.legacy{padding:80px 0}.timeline{grid-template-columns:1fr;gap:32px}}
+
+/* ---------- HSE ---------- */
+.hse{background:var(--blue-deep);color:#fff;padding:130px 0;position:relative;overflow:hidden}
+.hse .ghost{color:rgba(255,255,255,.04);top:50%;left:50%;transform:translate(-50%,-50%)}
+.hse-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;position:relative;z-index:1;align-items:center}
+.hse p.big{font-family:var(--font-display);font-size:clamp(26px,2.6vw,36px);font-weight:600;line-height:1.25;text-transform:uppercase;margin-top:26px}
+.hse p.body{margin-top:22px;color:rgba(255,255,255,.78);font-size:16px;max-width:480px}
+.hse-pillars{display:grid;gap:1px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.18)}
+.pillar{background:var(--blue-deep);padding:28px 30px;display:grid;grid-template-columns:54px 1fr;gap:20px;align-items:start;transition:background .3s,transform .3s}
+.pillar:hover{background:#123567;transform:translateX(8px)}
+.pillar svg{width:38px;height:38px;stroke:var(--orange)}
+.pillar h4{font-size:21px;font-weight:700}
+.pillar p{font-size:14px;color:rgba(255,255,255,.72);margin-top:6px}
+@media(max-width:980px){.hse{padding:96px 0}.hse-grid{grid-template-columns:1fr;gap:56px}}
+@media(max-width:560px){.hse{padding:80px 0}.pillar{padding:22px;grid-template-columns:44px 1fr;gap:14px}}
+
+/* ---------- certifications ---------- */
+.certs{padding:130px 0}
+.cert-grid{margin-top:64px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.cert{border:1.5px solid #C6CFDB;padding:34px 28px;position:relative;background:#fff;transition:border-color .3s,transform .3s,box-shadow .3s}
+.cert:hover{border-color:var(--blue);transform:translateY(-6px);box-shadow:0 18px 40px rgba(12,19,32,.1)}
+.cert::before{content:attr(data-no);position:absolute;top:14px;right:16px;font-family:var(--font-mono);font-size:10px;color:#9FA9B8;letter-spacing:.12em}
+.cert .seal{width:56px;height:56px;border:2px solid var(--blue);border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--blue);position:relative}
+.cert .seal::after{content:"";position:absolute;inset:5px;border:1px dashed rgba(242,106,33,.6);border-radius:50%;transition:transform .6s}
+.cert:hover .seal::after{transform:rotate(180deg)}
+.cert h4{font-size:21px;margin-top:22px;font-weight:700}
+.cert p{font-size:13.5px;color:#525C68;margin-top:8px}
+@media(max-width:980px){.certs{padding:96px 0}.cert-grid{grid-template-columns:repeat(2,1fr);margin-top:48px}}
+@media(max-width:540px){.certs{padding:80px 0}.cert-grid{grid-template-columns:1fr}}
+
+/* ---------- clients marquee ---------- */
+.clients{background:var(--ink);padding:96px 0;color:#fff;overflow:hidden}
+.clients .wrap{margin-bottom:46px}
+.marquee{display:flex;overflow:hidden;user-select:none;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;gap:0;animation:scroll 36s linear infinite;flex-shrink:0}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.client-chip{font-family:var(--font-display);font-weight:700;font-size:30px;letter-spacing:.04em;text-transform:uppercase;color:#5E6975;padding:18px 44px;border-right:1px solid var(--line);white-space:nowrap;transition:color .3s;display:flex;align-items:center;gap:14px}
+.client-chip::before{content:"";width:8px;height:8px;background:var(--orange);transform:rotate(45deg);flex-shrink:0}
+.client-chip:hover{color:var(--orange)}
+@media(max-width:560px){.clients{padding:72px 0}.client-chip{font-size:22px;padding:12px 28px}}
+
+/* ---------- careers band ---------- */
+.careers{background:var(--paper);padding:130px 0}
+.careers-band{background:var(--blue);color:#fff;padding:72px 64px;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;position:relative;overflow:hidden}
+.careers-band::before{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border:1px solid rgba(242,106,33,.35);border-radius:50%}
+.careers-band::after{content:"";position:absolute;right:-60px;top:-60px;width:300px;height:300px;border:1px dashed rgba(242,106,33,.3);border-radius:50%}
+.careers-band h2{font-size:clamp(32px,3.6vw,52px);font-weight:800}
+.careers-band p{margin-top:18px;color:rgba(255,255,255,.8);max-width:520px;font-size:16px}
+.careers-band .btn-zone{justify-self:end;position:relative;z-index:1}
+@media(max-width:900px){.careers{padding:96px 0}.careers-band{grid-template-columns:1fr;padding:52px 32px}.careers-band .btn-zone{justify-self:stretch}.careers-band .btn{width:100%}}
+@media(max-width:560px){.careers{padding:80px 0}}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:#fff;padding:96px 0 0}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:56px;padding-bottom:72px}
+.foot-grid h5{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:22px}
+.foot-grid p,.foot-grid a{font-size:14.5px;color:var(--grey-light);line-height:2}
+.foot-grid a{display:block;transition:color .25s}
+.foot-grid a:hover{color:#fff}
+.foot-logo{display:inline-block;background:#fff;padding:12px 18px;margin-bottom:22px}
+.foot-logo img{height:46px;width:auto}
+.foot-desc{max-width:300px}
+.contact-line{display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;margin-bottom:10px}
+.contact-line svg{width:16px;height:16px;stroke:var(--orange);margin-top:7px}
+.foot-bottom{border-top:1px solid var(--line);padding:26px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11.5px;color:var(--grey);letter-spacing:.06em}
+@media(max-width:980px){.foot-grid{grid-template-columns:1fr 1fr;gap:44px}}
+@media(max-width:560px){footer{padding:72px 0 0}.foot-grid{grid-template-columns:1fr;gap:36px}.foot-bottom{flex-direction:column;gap:6px}}
+
+/* focus + reduced motion */
+a:focus-visible,button:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .reveal,.pop{opacity:1;transform:none}
+  .t-mask>span{transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="fill" id="progressFill"></div></div>
+
+<!-- top utility bar -->
+<div class="topbar">
+  <div class="wrap">
+    <div><a href="tel:+97444587200">+974 4458 7200</a><span class="dot">◆</span><a href="mailto:qcon@qcon.com.qa">qcon@qcon.com.qa</a></div>
+    <div class="hours">SAT–THU 07:00–16:30 <span class="dot">◆</span> DOHA, QATAR</div>
+  </div>
+</div>
+
+<!-- nav -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo" aria-label="Qcon home">
+      <img src="https://qcon.com.qa/wp-content/uploads/2022/05/logo-1-3-01.png" alt="Qcon — Qatar Engineering & Construction Company">
+    </a>
+    <nav class="menu" id="menu">
+      <a href="#about">About</a>
+      <a href="#divisions">Divisions</a>
+      <a href="#legacy">Legacy</a>
+      <a href="#hse">HSE &amp; Quality</a>
+      <a href="#clients">Clients</a>
+      <a href="#contact" class="nav-cta">Contact Us</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- hero -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div data-depth="0.06">
+      <div class="hero-kicker">National EPC &amp; Maintenance Contractor · Est. 1975</div>
+      <h1 class="t-rev in">
+        <span class="t-mask"><span>We build</span></span>
+        <span class="t-mask"><span class="outline">Qatar's</span></span>
+        <span class="t-mask"><span>energy <span class="accent">backbone</span></span></span>
+      </h1>
+      <p class="lede">Qcon is the leading national EPC &amp; maintenance contractor serving the Oil&nbsp;&amp;&nbsp;Gas, Petrochemical, Fertilizer and Power industries — delivering total solutions for five decades.</p>
+      <div class="hero-actions">
+        <a href="#divisions" class="btn btn-primary">Explore Our Divisions <span class="arrow">→</span></a>
+        <a href="#about" class="btn btn-ghost">About Qcon</a>
+      </div>
+    </div>
+
+    <!-- hero photo composition -->
+    <div class="hero-visual">
+      <div class="hv-accent" data-depth="0.18"></div>
+      <div class="hv-img hv-main" data-depth="0.05">
+        <img src="https://qcon.com.qa/wp-content/uploads/2020/08/qcon-pic-1-scaled.jpg" alt="Qcon industrial construction site" loading="eager"
+             onerror="this.onerror=null;this.src='https://qcon.com.qa/wp-content/uploads/2020/08/08-1110x750-1.jpg'">
+      </div>
+      <div class="hv-img hv-side" data-depth="0.12">
+        <img src="https://qcon.com.qa/wp-content/uploads/2020/08/pipeline-light-wall-transportation-oil-gas-through-pipes-technology-politics-raw-materials-economics-copy-space-3d-render-3d-illustration_99433-3922.jpg" alt="Oil and gas pipeline" loading="eager"
+             onerror="this.onerror=null;this.parentElement.style.display='none'">
+      </div>
+      <div class="hv-badge" data-depth="0.15">
+        <span class="n">50<span style="color:var(--orange)">+</span></span>
+        <span class="t">Years building Qatar's industry</span>
+      </div>
+      <div class="titleblock">
+        <div class="tb-cell"><span class="tb-label">DWG NO.</span><span class="tb-value">QCN-1975-A</span></div>
+        <div class="tb-cell"><span class="tb-label">PROJECT</span><span class="tb-value">QATAR EPC</span></div>
+        <div class="tb-cell"><span class="tb-label">REV</span><span class="tb-value">50 YRS</span></div>
+        <div class="tb-cell"><span class="tb-label">SCALE</span><span class="tb-value">NATIONAL</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><div class="bar"></div>SCROLL</div>
+</section>
+
+<!-- velocity ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-row" data-ticker data-dir="1">
+    <span>Engineering</span><span>Procurement</span><span>Construction</span><span>Maintenance</span><span>Fabrication</span>
+    <span>Engineering</span><span>Procurement</span><span>Construction</span><span>Maintenance</span><span>Fabrication</span>
+    <span>Engineering</span><span>Procurement</span><span>Construction</span><span>Maintenance</span><span>Fabrication</span>
+  </div>
+</div>
+
+<!-- stats -->
+<section class="stats" aria-label="Company key figures">
+  <div class="stats-grid wrap" style="padding:0 32px">
+    <div class="stat reveal"><div class="num"><span class="count" data-target="50">0</span><span class="suffix">+</span></div><div class="lbl">Years of operation</div></div>
+    <div class="stat reveal d1"><div class="num"><span class="count" data-target="5000">0</span><span class="suffix">+</span></div><div class="lbl">Skilled permanent personnel</div></div>
+    <div class="stat reveal d2"><div class="num"><span class="count" data-target="6">0</span></div><div class="lbl">Specialised service divisions</div></div>
+    <div class="stat reveal d3"><div class="num"><span class="count" data-target="300">0</span><span class="suffix">T</span></div><div class="lbl">Crane lift capacity in-fleet</div></div>
+  </div>
+</section>
+
+<!-- about -->
+<section class="about" id="about">
+  <div class="ghost" data-speed="-0.08">SINCE 1975</div>
+  <div class="wrap about-grid">
+    <div>
+      <div class="eyebrow reveal">About the company</div>
+      <h2 class="section-title t-rev reveal">
+        <span class="t-mask"><span>Five decades of</span></span>
+        <span class="t-mask"><span>national contracting</span></span>
+      </h2>
+      <p class="reveal d2">Founded in 1975 as <strong>MECON</strong>, Qatar Engineering &amp; Construction Company (Qcon) has grown into the country's leading national EPC and maintenance contractor — contributing immensely to Qatar's hydrocarbon infrastructure across Oil&nbsp;&amp;&nbsp;Gas, Petrochemical, Fertilizer and Power.</p>
+      <p class="reveal d2">A multi-discipline industrial contractor, Qcon delivers total solutions through integrated Engineering, Procurement, Construction, Commissioning and long-term Maintenance — supported by its own fabrication yards, marine wharf, equipment fleet and accommodation facilities at Qatar's industrial hubs.</p>
+      <div class="cap-list reveal d3">
+        <div class="cap"><span class="tag">GRD A</span><span class="txt"><b>"Grade A" classified</b> Civil Contractor</span></div>
+        <div class="cap"><span class="tag">GRD 1</span><span class="txt"><b>"Grade 1" KAHRAMAA licensed</b> Electrical Contractor</span></div>
+        <div class="cap"><span class="tag">YARD</span><span class="txt"><b>Own marine yard &amp; wharf-side facility</b> — West Side, RLIC &amp; Mesaieed fabrication yards</span></div>
+        <div class="cap"><span class="tag">CAMP</span><span class="txt"><b>Accommodation camps</b> at industrial hubs with licensed in-house medical facility</span></div>
+      </div>
+    </div>
+    <div class="about-photo reveal d2">
+      <div class="frame">
+        <img src="https://qcon.com.qa/wp-content/uploads/2020/08/118-new-scaled.jpg" alt="Interior view of a steel fabrication facility" data-parallax loading="lazy"
+             onerror="this.onerror=null;this.src='https://qcon.com.qa/wp-content/uploads/2017/12/Ras_Laffan_Industrial_City-600x300.jpg'">
+      </div>
+      <div class="stamp">
+        <div class="yr">19<span>75</span></div>
+        <div class="yr-lbl">Established in Doha — formerly MECON</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- divisions -->
+<section class="divisions" id="divisions">
+  <div class="ghost" data-speed="0.07">DIVISIONS</div>
+  <div class="wrap">
+    <div class="div-head">
+      <div>
+        <div class="eyebrow on-dark reveal">Services division</div>
+        <h2 class="section-title t-rev reveal" style="color:#fff">
+          <span class="t-mask"><span>Six divisions.</span></span>
+          <span class="t-mask"><span>One contractor.</span></span>
+        </h2>
+      </div>
+      <p class="reveal d2">From greenfield EPC mega-projects to plant turnarounds and rapid-response maintenance — every discipline delivered under one integrated management system.</p>
+    </div>
+    <div class="div-grid">
+      <article class="div-card pop">
+        <span class="div-id">DIV — MPD</span>
+        <div class="div-icon"><svg viewBox="0 0 64 52" fill="none" stroke-width="1.6"><path d="M6 46 H58 M12 46 V20 L26 10 V46 M26 22 H40 V46 M40 30 H52 V46 M18 26 h4 M18 34 h4 M31 30 h4 M31 38 h4"/></svg></div>
+        <h3>Major Projects</h3>
+        <p>Integrated multi-discipline onshore &amp; offshore EPC/EPIC and general construction — pipelines, tank farms, LNG storage, water treatment and power plants for national and regional markets.</p>
+        <button class="div-link" data-div="mpd">Service detail</button>
+      </article>
+      <article class="div-card pop d1">
+        <span class="div-id">DIV — MSD</span>
+        <div class="div-icon"><svg viewBox="0 0 64 52" fill="none" stroke-width="1.6"><circle cx="26" cy="26" r="11"/><path d="M26 9v6M26 37v6M9 26h6M37 26h6M14 14l4.2 4.2M33.8 33.8 38 38M38 14l-4.2 4.2M18.2 33.8 14 38M47 18l10 10-7 7-10-10"/></svg></div>
+        <h3>Maintenance Services</h3>
+        <p>Plant maintenance for static &amp; rotating equipment, shutdowns &amp; turnarounds, catalyst exchange, long-term support contracts and a Rapid Response Team for short-notice works.</p>
+        <button class="div-link" data-div="msd">Service detail</button>
+      </article>
+      <article class="div-card pop d2">
+        <span class="div-id">DIV — OSD</span>
+        <div class="div-icon"><svg viewBox="0 0 64 52" fill="none" stroke-width="1.6"><path d="M4 42 q6 6 12 0 q6 6 12 0 q6 6 12 0 q6 6 12 0 q6 6 8 2 M14 42 V22 H50 V42 M22 22 V12 H42 V22 M26 28 h4 M34 28 h4 M30 7 V12"/></svg></div>
+        <h3>Offshore Services</h3>
+        <p>Marine fabrication yard with deep experience in onshore construction of offshore fixed platforms — topsides, jackets, large-bore spools, blasting &amp; painting at the Mesaieed wharf.</p>
+        <button class="div-link" data-div="osd">Service detail</button>
+      </article>
+      <article class="div-card pop">
+        <span class="div-id">DIV — CID</span>
+        <div class="div-icon"><svg viewBox="0 0 64 52" fill="none" stroke-width="1.6"><path d="M6 46 H58 M10 46 V18 L24 8 L38 18 V46 M18 46 V32 H30 V46 M44 46 V26 H54 V46 M16 22 h6 M26 22 h6"/></svg></div>
+        <h3>Civil &amp; Infrastructure</h3>
+        <p>Building construction and interior finishing experience dating back to 1974 — industrial buildings, foundations, roads and infrastructure as a Grade A classified civil contractor.</p>
+        <button class="div-link" data-div="cid">Service detail</button>
+      </article>
+      <article class="div-card pop d1">
+        <span class="div-id">DIV — SSD</span>
+        <div class="div-icon"><svg viewBox="0 0 64 52" fill="none" stroke-width="1.6"><path d="M6 46 H58 M12 46 V40 H28 V46 M14 40 V14 H18 V40 M16 14 L52 8 M52 8 V14 M52 14 L46 26 M42 8.8 V18 M40 18 h4 v4 h-4 z"/></svg></div>
+        <h3>Support Services</h3>
+        <p>Extensive in-house plant &amp; equipment fleet including cranes up to 300-ton capacity, scaffolding services, technical manpower supply and equipment hire across all sites.</p>
+        <button class="div-link" data-div="ssd">Service detail</button>
+      </article>
+      <article class="div-card pop d2">
+        <span class="div-id">DIV — E&amp;I</span>
+        <div class="div-icon"><svg viewBox="0 0 64 52" fill="none" stroke-width="1.6"><path d="M32 4 L20 28 h10 L26 48 L44 20 H33 L40 4 Z M8 40 h8 M48 40 h8 M8 12 h8 M48 12 h8"/></svg></div>
+        <h3>Electrical &amp; Instrumentation</h3>
+        <p>Grade 1 KAHRAMAA-licensed electrical contracting — comprehensive E&amp;I engineering, installation, testing and commissioning for power and process facilities.</p>
+        <button class="div-link" data-div="ei">Service detail</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- service detail modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-backdrop" id="modalBackdrop"></div>
+  <div class="modal-panel">
+    <button class="modal-close" id="modalClose" aria-label="Close service detail">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="modal-head">
+      <div class="modal-id" id="modalId"></div>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <p class="modal-intro" id="modalIntro"></p>
+    </div>
+    <div class="modal-body">
+      <div class="scope-label">Scope of services</div>
+      <ul class="scope-list" id="modalScope"></ul>
+      <div class="scope-label">Key clients &amp; references</div>
+      <p class="modal-clients" id="modalClients"></p>
+      <div class="modal-cta">
+        <a href="#contact" class="btn btn-primary" id="modalContact">Enquire About This Division <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- velocity ticker (outline variant) -->
+<div class="ticker alt" aria-hidden="true">
+  <div class="ticker-row" data-ticker data-dir="-1">
+    <span>Oil &amp; Gas</span><span>Petrochemical</span><span>Fertilizer</span><span>Power</span><span>Offshore</span>
+    <span>Oil &amp; Gas</span><span>Petrochemical</span><span>Fertilizer</span><span>Power</span><span>Offshore</span>
+    <span>Oil &amp; Gas</span><span>Petrochemical</span><span>Fertilizer</span><span>Power</span><span>Offshore</span>
+  </div>
+</div>
+
+<!-- legacy timeline -->
+<section class="legacy" id="legacy">
+  <div class="ghost" data-speed="-0.06">LEGACY</div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <div class="eyebrow reveal">Our legacy</div>
+    <h2 class="section-title t-rev reveal">
+      <span class="t-mask"><span>Built alongside</span></span>
+      <span class="t-mask"><span>Qatar's growth</span></span>
+    </h2>
+    <div class="timeline" id="timeline">
+      <div class="tl-track"><div class="tl-fill" id="tlFill"></div></div>
+      <div class="tl-item reveal"><div class="tl-year">1975</div><h4>Founded as MECON</h4><p>Established in Doha as Mideast Constructors W.L.L., at the dawn of Qatar's hydrocarbon era.</p></div>
+      <div class="tl-item reveal d1"><div class="tl-year">1990s</div><h4>National EPC contractor</h4><p>Rebranded as Qcon; expanded into multi-discipline EPC, fabrication and plant maintenance.</p></div>
+      <div class="tl-item reveal d2"><div class="tl-year">2000s</div><h4>LNG-era expansion</h4><p>Major works for Qatargas, RasGas and Dolphin Energy through Qatar's LNG build-out; yards at RLIC &amp; Mesaieed.</p></div>
+      <div class="tl-item reveal d3"><div class="tl-year">Today</div><h4>5,000+ strong</h4><p>A workforce of over 5,000 permanent skilled personnel delivering projects across Qatar and the region.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HSE -->
+<section class="hse" id="hse">
+  <div class="ghost" data-speed="0.05">QCON CARES</div>
+  <div class="wrap hse-grid">
+    <div>
+      <div class="eyebrow on-dark reveal">HSE &amp; Quality — Qcon Cares</div>
+      <p class="big reveal d1">Safety comes first.<br>It is a line-management responsibility.</p>
+      <p class="body reveal d2">Every person on every Qcon site is trained in the safety aspects relevant to their job and project. Our relentless commitment to Health, Safety, Environment and Quality protects our people, our stakeholders, the community and the environment — and it has earned us numerous industry awards.</p>
+    </div>
+    <div class="hse-pillars reveal d2">
+      <div class="pillar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3 4 6v6c0 5 3.4 7.7 8 9 4.6-1.3 8-4 8-9V6l-8-3Z M9 12l2 2 4-4"/></svg>
+        <div><h4>Ownership</h4><p>Safety is owned at every level — a direct line-management responsibility, not a department.</p></div>
+      </div>
+      <div class="pillar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 19V7l8-4 8 4v12 M12 11v8 M8 9.5v8 M16 9.5v8 M4 19h16"/></svg>
+        <div><h4>Training</h4><p>Everyone is trained in all aspects of safety relevant to their job before stepping on site.</p></div>
+      </div>
+      <div class="pillar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 7 21l5-2.5L17 21l-2-7.5"/></svg>
+        <div><h4>Recognition</h4><p>Numerous recent HSE awards from clients across Qatar's energy sector.</p></div>
+      </div>
+      <div class="pillar">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 21c4-3 7-6.5 7-10a7 7 0 1 0-14 0c0 3.5 3 7 7 10Z M12 8v6 M9 11h6"/></svg>
+        <div><h4>Qcon Cares</h4><p>A licensed in-house medical facility and welfare programmes for our 5,000+ workforce.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- certifications -->
+<section class="certs" id="certs">
+  <div class="wrap">
+    <div class="eyebrow reveal">Systems &amp; standards</div>
+    <h2 class="section-title t-rev reveal">
+      <span class="t-mask"><span>Certified. Audited. Proven.</span></span>
+    </h2>
+    <div class="cert-grid">
+      <div class="cert pop" data-no="CERT-01">
+        <div class="seal">ISO</div>
+        <h4>ISO 9001:2015</h4>
+        <p>Certified Quality Management System with routine and random audits under a continuous improvement programme.</p>
+      </div>
+      <div class="cert pop d1" data-no="CERT-02">
+        <div class="seal">ASME</div>
+        <h4>ASME Stamps</h4>
+        <p>Authorised U, U2, R, S and PP stamps — pressure vessels and process skids fabricated in our ASME-certified shop.</p>
+      </div>
+      <div class="cert pop d2" data-no="CERT-03">
+        <div class="seal">QC</div>
+        <h4>Quality Control</h4>
+        <p>Dedicated in-house inspection team supported by specialist NDT service partners on every project.</p>
+      </div>
+      <div class="cert pop d3" data-no="CERT-04">
+        <div class="seal">SYS</div>
+        <h4>Integrated Systems</h4>
+        <p>Primavera project planning, integrated cost control, procurement, P&amp;M, payroll and welding database systems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- clients -->
+<section class="clients" id="clients">
+  <div class="wrap">
+    <div class="eyebrow on-dark reveal">Trusted by Qatar's energy leaders</div>
+    <h2 class="section-title t-rev reveal" style="color:#fff">
+      <span class="t-mask"><span>Our clients</span></span>
+    </h2>
+  </div>
+  <div class="marquee" aria-label="Client list">
+    <div class="marquee-track">
+      <span class="client-chip">QatarEnergy</span><span class="client-chip">Qatargas</span><span class="client-chip">RasGas</span><span class="client-chip">Dolphin Energy</span><span class="client-chip">Shell Qatar</span><span class="client-chip">QAFCO</span><span class="client-chip">QAPCO</span><span class="client-chip">QAFAC</span><span class="client-chip">Q-Chem</span><span class="client-chip">KAHRAMAA</span>
+      <span class="client-chip">QatarEnergy</span><span class="client-chip">Qatargas</span><span class="client-chip">RasGas</span><span class="client-chip">Dolphin Energy</span><span class="client-chip">Shell Qatar</span><span class="client-chip">QAFCO</span><span class="client-chip">QAPCO</span><span class="client-chip">QAFAC</span><span class="client-chip">Q-Chem</span><span class="client-chip">KAHRAMAA</span>
+    </div>
+  </div>
+</section>
+
+<!-- careers -->
+<section class="careers" id="careers">
+  <div class="wrap">
+    <div class="careers-band reveal">
+      <div>
+        <div class="eyebrow on-dark">Careers at Qcon</div>
+        <h2>Build your career where Qatar builds its future</h2>
+        <p>Join a workforce of over 5,000 engineers, fabricators, planners and HSE professionals delivering the region's most demanding energy projects.</p>
+      </div>
+      <div class="btn-zone">
+        <a href="#contact" class="btn btn-primary">View Opportunities <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- footer / contact -->
+<footer id="contact">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-logo">
+        <img src="https://qcon.com.qa/wp-content/uploads/2022/05/logo-1-3-01.png" alt="Qcon logo">
+      </div>
+      <p class="foot-desc">The leading national EPC and maintenance contractor in the Oil &amp; Gas, Petrochemical, Fertilizer and Power industries since 1975.</p>
+    </div>
+    <div>
+      <h5>Company</h5>
+      <a href="#about">About Us</a>
+      <a href="#legacy">Vision &amp; Mission</a>
+      <a href="#hse">HSE &amp; Quality</a>
+      <a href="#certs">Systems &amp; Standards</a>
+      <a href="#careers">Careers</a>
+    </div>
+    <div>
+      <h5>Divisions</h5>
+      <a href="#divisions">Major Projects</a>
+      <a href="#divisions">Maintenance Services</a>
+      <a href="#divisions">Offshore Services</a>
+      <a href="#divisions">Civil &amp; Infrastructure</a>
+      <a href="#divisions">Support Services</a>
+      <a href="#divisions">Electrical &amp; Instrumentation</a>
+    </div>
+    <div>
+      <h5>Head Office — Qatar</h5>
+      <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 2Z"/></svg><p>Tel: +974 4458 7200<br>Fax: +974 4458 7201</p></div>
+      <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z M22 6 12 13 2 6"/></svg><p><a href="mailto:qcon@qcon.com.qa" style="display:inline">qcon@qcon.com.qa</a></p></div>
+      <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><p>Sat–Thu: 07:00 – 16:30<br>Friday: Closed</p></div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 QATAR ENGINEERING &amp; CONSTRUCTION COMPANY W.L.L</span>
+    <span>DOHA · RAS LAFFAN · MESAIEED</span>
+  </div>
+</footer>
+
+<script>
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ----- nav -----
+const nav=document.getElementById('nav');
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{menu.classList.toggle('open');burger.setAttribute('aria-label',menu.classList.contains('open')?'Close menu':'Open menu')});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+
+// ----- service detail data (sourced from qcon.com.qa) -----
+const DIVISIONS={
+  mpd:{
+    id:"DIV — MPD · Major Projects Division",
+    title:"Major Projects Division",
+    intro:"Qcon is an integrated multi-disciplined onshore and offshore EPC/EPIC and general contractor, delivering EPC/EPIC and general construction projects for the national and regional markets — with in-house multidisciplinary detailed design engineering support on every project.",
+    scope:[
+      "Main EPC/EPIC contracting — multi-discipline onshore & offshore",
+      "Pipelines, tank farms and storage tanks, including LNG tanks",
+      "Oil & gas processing plants and brownfield expansions",
+      "Waste-water treatment facilities — total solutions",
+      "Power plant construction and tie-ins",
+      "Large-size mechanical fabrication & erection works",
+      "Single-discipline mechanical, electrical, instrumentation & civil projects",
+      "Detailed design engineering support for all EPC/EPIC projects"
+    ],
+    clients:"QatarEnergy (QP) · Qatargas · RasGas · Dolphin Energy · Shell Qatar · QAFCO · QAFAC · QAPCO · Q-Chem · ADGAS · Takreer"
+  },
+  msd:{
+    id:"DIV — MSD · Maintenance Services Division",
+    title:"Maintenance Services Division",
+    intro:"Provision of plant maintenance services covering static and rotating equipment maintenance, repair and modification of piping systems — from full shutdowns and turnarounds to long-term support contracts and emergency call-outs.",
+    scope:[
+      "Shutdown & turnaround maintenance for oil, gas & petrochemical plants",
+      "Static & rotating equipment maintenance, exchange and overhaul",
+      "Installation of new equipment and tie-ins to live plant",
+      "Catalyst exchange operations",
+      "Long-term maintenance support contracts",
+      "Emergency call-out services, 24/7",
+      "Rapid Response Team (RRT) for small & short-notice projects",
+      "Technical manpower services, plant & equipment hire, scaffolding hire & erection"
+    ],
+    clients:"Long-term maintenance contractor for oil, gas, petrochemical & industrial plants across Ras Laffan & Mesaieed"
+  },
+  osd:{
+    id:"DIV — OSD · Offshore Services Division",
+    title:"Offshore Services Division",
+    intro:"Qcon's Marine Fabrication Yard at Mesaieed holds wide experience in the onshore construction of offshore fixed platforms — backed by Qcon's own wharf-side facility for direct load-out.",
+    scope:[
+      "Offshore topside and jacket fabrication",
+      "Fabrication of fixed platform structures",
+      "Large-bore pipe spool fabrication",
+      "Blasting and painting works",
+      "Marine & heavy structural fabrication",
+      "Offshore crane replacement and brownfield campaigns",
+      "Wharf-side load-out from Qcon's own marine yard",
+      "Offshore hook-up and maintenance support"
+    ],
+    clients:"Qatargas offshore crane replacement programme and offshore campaigns for Qatar's major operators"
+  },
+  cid:{
+    id:"DIV — CID · Civil & Infrastructure Division",
+    title:"Civil & Infrastructure Division",
+    intro:"Qcon's experience in building construction and interior finishing works dates back to 1974 — refined over five decades into a 'Grade A' classified civil contracting capability for the industrial and infrastructure sectors.",
+    scope:[
+      "Industrial buildings and plant civil works",
+      "Foundations, underground services and earthworks",
+      "Buildings construction and interior finishing",
+      "Roads and infrastructure works",
+      "Concrete structures for process facilities",
+      "Civil works supporting EPC mega-projects",
+      "'Grade A' classified civil contracting",
+      "Civil maintenance for operating plants"
+    ],
+    clients:"Civil & infrastructure works delivered across RLIC, Mesaieed and Doha for Qatar's energy sector"
+  },
+  ssd:{
+    id:"DIV — SSD · Support Services Division",
+    title:"Support Services Division",
+    intro:"Qcon operates an extensive in-house fleet of plant and equipment — including cranes up to 300-ton capacity with access to larger units — supporting every Qcon project and available for client hire.",
+    scope:[
+      "Crane fleet up to 300T capacity (access to larger cranes)",
+      "In-house construction equipment resources",
+      "Scaffolding hire and erection services",
+      "Technical manpower supply — 5,000+ skilled personnel",
+      "Accommodation camps at industrial hubs",
+      "Licensed medical facility with qualified doctor & staff",
+      "Logistics and heavy transport support",
+      "Plant & equipment hire for client projects"
+    ],
+    clients:"Supporting all Qcon divisions and direct equipment & manpower hire for clients across Qatar"
+  },
+  ei:{
+    id:"DIV — E&I · Electrical & Instrumentation Division",
+    title:"Electrical & Instrumentation Division",
+    intro:"As a 'Grade 1' KAHRAMAA-licensed electrical contractor, Qcon delivers comprehensive and integrated E&I engineering, procurement, construction and commissioning solutions for the power, oil & gas, fertilizer, refinery and petrochemical sectors.",
+    scope:[
+      "'Grade 1' KAHRAMAA-licensed electrical contracting",
+      "E&I installation for process plants and utilities",
+      "Substations, switchgear and power distribution",
+      "Instrumentation installation, calibration & loop checking",
+      "Testing, pre-commissioning and commissioning",
+      "Cable laying, termination and glanding",
+      "E&I works within EPC/PC/C project scopes",
+      "Brownfield E&I upgrades and modifications"
+    ],
+    clients:"E&I solutions for the Power, Oil & Gas, Fertilizer, Refinery & Petrochemical sectors in Qatar and regionally"
+  }
+};
+
+// ----- modal logic -----
+const modal=document.getElementById('modal');
+const mId=document.getElementById('modalId'),mTitle=document.getElementById('modalTitle'),
+      mIntro=document.getElementById('modalIntro'),mScope=document.getElementById('modalScope'),
+      mClients=document.getElementById('modalClients');
+let lastFocus=null;
+
+function openModal(key){
+  const d=DIVISIONS[key];if(!d)return;
+  mId.textContent=d.id;
+  mTitle.textContent=d.title;
+  mIntro.textContent=d.intro;
+  mScope.innerHTML=d.scope.map(s=>`<li>${s}</li>`).join('');
+  mClients.textContent=d.clients;
+  lastFocus=document.activeElement;
+  modal.classList.add('open');
+  document.body.classList.add('modal-open');
+  document.getElementById('modalClose').focus();
+}
+function closeModal(){
+  modal.classList.remove('open');
+  document.body.classList.remove('modal-open');
+  if(lastFocus)lastFocus.focus();
+}
+document.querySelectorAll('.div-link[data-div]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.div)));
+document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modalBackdrop').addEventListener('click',closeModal);
+document.getElementById('modalContact').addEventListener('click',closeModal);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal()});
+
+// ----- reveals -----
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal,.pop,.t-rev').forEach(el=>io.observe(el));
+
+// ----- counters -----
+const cio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const el=e.target,target=+el.dataset.target;
+  cio.unobserve(el);
+  if(reduce){el.textContent=target.toLocaleString();return}
+  const t0=performance.now(),dur=1600;
+  (function tick(t){
+    const p=Math.min((t-t0)/dur,1),ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*ease).toLocaleString();
+    if(p<1)requestAnimationFrame(tick);
+  })(t0);
+}),{threshold:.4});
+document.querySelectorAll('.count').forEach(el=>cio.observe(el));
+
+// ----- hero image zoom-in once loaded -----
+document.querySelectorAll('.hv-img img').forEach(img=>{
+  const done=()=>img.parentElement.classList.add('loaded');
+  img.complete?done():img.addEventListener('load',done);
+});
+
+// ----- scroll-driven engine (one rAF loop) -----
+const fill=document.getElementById('progressFill');
+const ghosts=[...document.querySelectorAll('[data-speed]')];
+const depths=[...document.querySelectorAll('[data-depth]')];
+const tickers=[...document.querySelectorAll('[data-ticker]')];
+const parallaxImgs=[...document.querySelectorAll('[data-parallax]')];
+const tlSection=document.getElementById('timeline');
+const tlFill=document.getElementById('tlFill');
+const tlItems=tlSection?[...tlSection.querySelectorAll('.tl-item')]:[];
+const isMobile=matchMedia('(max-width:760px)').matches;
+
+let lastY=scrollY,vel=0,ticking=false;
+
+function frame(){
+  ticking=false;
+  const y=scrollY,h=document.documentElement;
+  const max=h.scrollHeight-innerHeight;
+  fill.style.transform=`scaleX(${max>0?y/max:0})`;
+  if(reduce){lastY=y;return}
+
+  vel+=(y-lastY-vel)*.12;
+  lastY=y;
+
+  // ghost background words drift
+  for(const g of ghosts){
+    const r=g.parentElement.getBoundingClientRect();
+    const prog=(innerHeight-r.top)/(innerHeight+r.height);
+    const x=(prog-.5)*innerWidth*+g.dataset.speed*4;
+    g.style.transform=g.closest('.hse')?`translate(calc(-50% + ${x}px),-50%)`:`translateX(${x}px)`;
+  }
+  // hero depth layers (lighter on mobile)
+  const dScale=isMobile?.5:1;
+  for(const d of depths){
+    d.style.transform=`translateY(${y* +d.dataset.depth*-1*dScale}px)`;
+  }
+  // tickers: position follows scroll, skew follows velocity
+  for(const t of tickers){
+    const dir=+t.dataset.dir;
+    const skew=Math.max(-10,Math.min(10,vel*.35));
+    t.style.transform=`translateX(${(y*.4*dir)%(t.scrollWidth/3)}px) skewX(${skew*dir}deg)`;
+  }
+  // about photo parallax
+  for(const img of parallaxImgs){
+    const r=img.parentElement.getBoundingClientRect();
+    const prog=(innerHeight-r.top)/(innerHeight+r.height);
+    img.style.transform=`translateY(${(prog-.5)*-60}px)`;
+  }
+  // timeline draw
+  if(tlSection){
+    const r=tlSection.getBoundingClientRect();
+    const prog=Math.max(0,Math.min(1,(innerHeight*.8-r.top)/r.height));
+    tlFill.style.width=(prog*100)+'%';
+    tlItems.forEach((it,i)=>it.classList.toggle('lit',prog>(i+0.5)/tlItems.length));
+  }
+}
+function onScroll(){
+  nav.classList.toggle('scrolled',scrollY>10);
+  if(!ticking){ticking=true;requestAnimationFrame(frame)}
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll,{passive:true});
+frame();
+</script>
+</body>
+</html>
